@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Email to school</title>
+</head>
+	<body>
+		<div class="wrapper">
+			<form action="email.php">
+				<label for="contact-type">Contacter</label>
+				<input type="checkbox" name="contact-type[]" value="0">Ecole</input>
+				<input type="checkbox" name="contact-type[]" value="1">Centre de loisirs</input>
+				<br>
+				<label for="child">Enfant</label>
+				<input type="checkbox" name="child[]" value="camille">Camille</input>
+				<input type="checkbox" name="child[]" value="arthur">Arthur</input>
+				<br>
+				<input type="radio" name="go-nogo[]" value="go">Ira</input>
+				<input type="radio" name="go-nogo[]" value="nogo">N'ira pas</input>
+				<label for="date">Date</label>
+				<input type="date" name="date" placeholder="jj/mm/aaa">
+				<input type="submit" value="Envoyer le mail">
+			</form>
+		</div>
+	</body>
+</html>
