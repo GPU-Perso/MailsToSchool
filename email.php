@@ -74,7 +74,7 @@
 			    
 			    $url = "to=".urlencode($this->mailTo[$i])."&cc=".urlencode($this->mailCC)."&subject=".urlencode($this->mailTitle[$i])."&body=".urlencode($this->mailBody[$i]);
 			    // echo $url."<br>";
-			    echo "<a href='mailto:?".$url."' target='_blank'>Envoyer</a><br>";
+			    echo "<a href='mailto:?".$url."' target='_blank' class='submit'>Envoyer</a></li>";
 	    	}
 		    echo "</ol>";
 	    }
@@ -94,12 +94,10 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 	<body>
-		<div class="wrapper">
 
 <?php
 	$mail->print();
 ?>
 
-		</div>
 	</body>
 </html>
