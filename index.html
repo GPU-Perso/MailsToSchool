@@ -2,24 +2,31 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Email to school</title>
+	<title>Notification centre de loisirs</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 	<body>
+		<h1>Configuration des mails à envoyer</h1>
 		<div class="wrapper">
 			<form action="email.php">
-				<label for="contact-type">Contacter</label>
-				<input type="checkbox" name="contact-type[]" value="0">Ecole</input>
-				<input type="checkbox" name="contact-type[]" value="1">Centre de loisirs</input>
-				<br>
-				<label for="child">Enfant</label>
-				<input type="checkbox" name="child[]" value="camille">Camille</input>
-				<input type="checkbox" name="child[]" value="arthur">Arthur</input>
-				<br>
-				<input type="radio" name="go-nogo[]" value="go">Ira</input>
-				<input type="radio" name="go-nogo[]" value="nogo">N'ira pas</input>
-				<label for="date">Date</label>
-				<input type="date" name="date" placeholder="jj/mm/aaa">
-				<input type="submit" value="Envoyer le mail">
+				<div class="group">
+					<h2>Enfants</h2>
+					<input type="checkbox" name="child[]" value="0" id="child-0"><label for="child-0">Camille</label>
+					<input type="checkbox" name="child[]" value="1" id="child-1"><label for="child-1">Arthur</label><br>
+				</div>
+					<div class="group">
+					<input type="radio" name="go-nogo" value="0" id="go-nogo-0"><label for="go-nogo-0">Ira</label>
+					<input type="radio" name="go-nogo" value="1" id="go-nogo-1"><label for="go-nogo-1">N'ira pas</label>
+					<label> au centre de loisirs</label>
+					<br>
+				</div>
+				<div class="group">
+					<h2>Date</h2>
+					<input type="date" name="date" placeholder="jj-mm-aaaa"><br>
+				</div>
+				<div class="group">
+					<input type="submit" value="Visualiser le(s) mail(s)">
+				</div>
 			</form>
 		</div>
 	</body>
