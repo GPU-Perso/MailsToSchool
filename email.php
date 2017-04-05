@@ -88,6 +88,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 	<body>
+		<h1>Vérification et envoi des mails</h1>
 
 <?php
 	$mail->printMail();
