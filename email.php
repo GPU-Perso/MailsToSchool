@@ -6,7 +6,6 @@
 	    private $goNogo;
 	    private $date = "";
 	    private $mailCC = "gpungeot@gmail.com, sicardstephanie@gmail.com";
-	    private $mailFrom = "gpungeot@gmail.com";
 	    private static $mailBodyParts = array(
 	    	"genericStart" => "Bonjour,\nPour information mon enfant ",
 			"go" => "ira ",
@@ -15,8 +14,8 @@
 			"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
 			);
 
-	    private $mailBody = [];
-	    private $mailTo = [];
+	    private $mailBody = array();
+	    private $mailTo = array();
 	    private $mailTitle = "";
 	    private $nbMails = 0;
 
@@ -55,17 +54,12 @@
     			$this->mailBody[$i] .= self::$mailBodyParts["genericRegards"];
 	    	}
 	    }
-	    public function displayVar() {
-	        echo $this->var;
-	    }
-
-	    public function print()
+	    public function printMail()
 	    {
 		    echo "<ol>";
 	    	for($i = 0; $i < $this->nbMails; $i++)
 	    	{
 		    	echo "<li>";
-		    	echo "<b>From : </b>".$this->mailFrom."<br>";
 		    	echo "<b>To : </b>".$this->mailTo[$i]."<br>";
 		    	echo "<b>CC : </b>".$this->mailCC."<br>";
 		    	echo "<b>Title : </b>".$this->mailTitle[$i]."<br>";
@@ -96,7 +90,7 @@
 	<body>
 
 <?php
-	$mail->print();
+	$mail->printMail();
 ?>
 
 	</body>
