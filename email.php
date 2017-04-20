@@ -1,59 +1,64 @@
 <?php
 
+	const Camille = 0;
+	const Arthur = 1;
+
 	class EMail
 	{
 	    private $child;
 	    private $goNogo;
-	    private $date = "";
-	    private $mailCC = "gpungeot@gmail.com,sicardstephanie@gmail.com";
+	    private $beginDate = null;
+	    private $endDate = null;
 	    private static $mailBodyParts = array(
 	    	"genericStart" => "Bonjour,\nPour information mon enfant ",
 			"go" => "ira ",
 			"noGo" => "n'ira pas ",
-			"genericKinderGarden" => "au centre de loisirs le ",
+			"genericKinderGarden" => "au centre de loisirs ",
 			"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
 			);
+	    private $childNames = [Camille => "Camille", Arthur => "Arthur"];
+	    private $kinderGarden = [Camille => "CLP ", Arthur => "CLM "];
+	    private $kinderGardenMails = [Camille => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>", Arthur => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>"];
 
 	    private $mailBody = array();
-	    private $mailTo = array();
 	    private $mailChild = array();
 	    private $mailTitle = "";
 	    private $nbMails = 0;
 
-	    public function __construct($child, $goNogo, $date)
+	    public function __construct($child, $goNogo, $beginDate, $endDate)
 	    {
 	       	$this->child = $child;
 	    	$this->goNogo = $goNogo;
-	    	$this->date = DateTime::createFromFormat("d-m-Y", $date);
+	    	$this->beginDate = DateTime::createFromFormat("d-m-Y", $beginDate);
+	    	if($endDate != null && $endDate != "")
+	    	{
+	    		$this->endDate = DateTime::createFromFormat("d-m-Y", $endDate);
+		    	if($this->beginDate >= $this->endDate)
+		    		die("End date must be after begin date");
+	    	}
 
 			for($i = 0; $i < count($this->child); $i++)
 			{
+				if(!isset($this->childNames[$this->child[$i]]))
+					die("Unknown child");
+
 				$this->nbMails++;
 				$this->mailBody[$i] = self::$mailBodyParts["genericStart"];
-				switch ($this->child[$i])
-				{
-					case 0:
-						$this->mailChild[$i] = "Camille";
-						$this->mailTitle[$i] = "CLP Camille Pungeot ".$this->date->format("d/m/Y");
-						//$this->mailTo[$i] = "gpungeot@gmail.com";
-						$this->mailTo[$i] = " Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>";
-						$this->mailBody[$i] .= "Camille Pungeot ";
-						break;
-					
-					case 1:
-						$this->mailChild[$i] = "Arthur";
-						$this->mailTitle[$i] = "CLM Arthur Pungeot ".$this->date->format("d/m/Y");
-						//$this->mailTo[$i] = "gpungeot@gmail.com";
-						$this->mailTo[$i] = " Périscolaire Louveciennes <perisco@louveciennes.fr>, Maîtresse Arthur MS <0782434x@ac-versailles.fr>, Centre De Loisirs Maternelle Louveciennes <clm@louveciennes.fr>";
-						$this->mailBody[$i] .= "Arthur Pungeot ";
-						break;
-					
-					default:
-						die("Unknown child");
-						break;
-				}
+
+				$this->mailChild[$i] = $this->childNames[$this->child[$i]];
+				$this->mailTitle[$i] = $this->kinderGarden[$this->child[$i]].$this->mailChild[$i]." Pungeot ".$this->beginDate->format("d/m/Y");
+				if($this->endDate != null)
+					$this->mailTitle[$i] .= " => ".$this->endDate->format("d/m/Y");
+				$this->mailTo[$i] = $this->kinderGardenMails[$this->child[$i]];
+				$this->mailBody[$i] .= $this->mailChild[$i]." Pungeot ";
+
 		    	$this->mailBody[$i] .= $this->goNogo == 0 ? self::$mailBodyParts["go"] : self::$mailBodyParts["noGo"];
-    			$this->mailBody[$i] .= self::$mailBodyParts["genericKinderGarden"].$this->date->format("d/m/Y");
+
+				if($this->endDate == null)
+    				$this->mailBody[$i] .= self::$mailBodyParts["genericKinderGarden"]."le ".$this->beginDate->format("d/m/Y");
+			    else
+    				$this->mailBody[$i] .= self::$mailBodyParts["genericKinderGarden"]."du ".$this->beginDate->format("d/m/Y")." au ".$this->endDate->format("d/m/Y");
+
     			$this->mailBody[$i] .= self::$mailBodyParts["genericRegards"];
 	    	}
 	    }
@@ -84,10 +89,10 @@ EOT;
 	    }
 	}
 
-	if(!isset($_GET["child"]) || !isset($_GET["go-nogo"]) || !isset($_GET["date"]))
+	if(!isset($_GET["child"]) || !isset($_GET["go-nogo"]) || !isset($_GET["begin-date"]) || $_GET["begin-date"] == "")
 		die("Missing parameters");
 
-	$mail = new Email($_GET["child"], $_GET["go-nogo"], $_GET["date"]);
+	$mail = new Email($_GET["child"], $_GET["go-nogo"], $_GET["begin-date"], isset($_GET["end-date"]) ? $_GET["end-date"] : null);
 ?>
 
 <!DOCTYPE html>
