@@ -4,28 +4,80 @@
 	<meta charset="utf-8">
 	<title>Notification centre de loisirs</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="/external_libraries/jquery-3.2.0.js"></script>
+	<script type="text/javascript" src="/external_libraries/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="/external_libraries/bootstrap-3.3.7-dist/css/bootstrap.css">
+	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 </head>
 	<body>
-		<h1>Configuration des mails à envoyer</h1>
-		<form action="email.php">
-			<div class="group">
-				<h2>Enfants</h2>
-				<input type="checkbox" name="child[]" value="0" id="child-0"><label for="child-0">Camille</label>
-				<input type="checkbox" name="child[]" value="1" id="child-1"><label for="child-1">Arthur</label><br>
-			</div>
-				<div class="group">
-				<input type="radio" name="go-nogo" value="0" id="go-nogo-0"><label for="go-nogo-0">Ira</label>
-				<input type="radio" name="go-nogo" value="1" id="go-nogo-1"><label for="go-nogo-1">N'ira pas</label>
-				<label> au centre de loisirs</label>
-				<br>
-			</div>
-			<div class="group">
-				<h2>Date</h2>
-				<input type="date" name="date" placeholder="jj-mm-aaaa"><br>
-			</div>
-			<div class="group">
-				<input type="submit" class="submit" value="Visualiser le(s) mail(s)">
-			</div>
-		</form>
+		<header class="container-fluid">
+			<h1>Mails au centre de loisirs</h1>
+		</header>
+		<div class="container">
+			<form action="email.php">
+				<div class="form-group">
+					<h2>Enfants</h2>
+		            <input type="checkbox" name="child[]" value="0" id="child-0" />
+		            <div class="btn-group">
+		                <label for="child-0" class="btn btn-primary">
+		                    <span class="glyphicon glyphicon-ok"></span>
+		                    <span> </span>
+		                </label>
+		                <label for="child-0" class="btn btn-default active">
+		                    Camille
+		                </label>
+		            </div>
+		            <input type="checkbox" name="child[]" value="1" id="child-1" />
+		            <div class="btn-group">
+		                <label for="child-1" class="btn btn-primary">
+		                    <span class="glyphicon glyphicon-ok"></span>
+		                    <span> </span>
+		                </label>
+		                <label for="child-1" class="btn btn-default active">
+		                    Arthur
+		                </label>
+		            </div>
+		        </div>
+
+				<div class="form-group">
+		            <input type="radio" name="go-nogo" value="0" id="go-nogo-0" />
+		            <div class="btn-group">
+		                <label for="go-nogo-0" class="btn btn-primary">
+		                    <span class="glyphicon glyphicon-ok"></span>
+		                    <span> </span>
+		                </label>
+		                <label for="go-nogo-0" class="btn btn-default active">
+		                    ira
+		                </label>
+		            </div>
+		            <input type="radio" name="go-nogo" value="1" id="go-nogo-1" />
+		            <div class="btn-group">
+		                <label for="go-nogo-1" class="btn btn-primary">
+		                    <span class="glyphicon glyphicon-ok"></span>
+		                    <span> </span>
+		                </label>
+		                <label for="go-nogo-1" class="btn btn-default active">
+		                    n'ira pas
+		                </label>
+		            </div>
+		        </div>
+
+
+				<div class="form-group">
+					<h2>Date</h2>
+					<div class="input-group date">
+	  					<input type="text" name="date" id="date" class="form-control" placeholder="jj-mm-aaaa">
+	  						<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Visualiser le(s) mail(s) </button>
+				</div>
+			</form>
+		<div>
 	</body>
 </html>
