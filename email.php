@@ -5,7 +5,7 @@
 	    private $child;
 	    private $goNogo;
 	    private $date = "";
-	    private $mailCC = "gpungeot@gmail.com, sicardstephanie@gmail.com";
+	    private $mailCC = "gpungeot@gmail.com,sicardstephanie@gmail.com";
 	    private static $mailBodyParts = array(
 	    	"genericStart" => "Bonjour,\nPour information mon enfant ",
 			"go" => "ira ",
