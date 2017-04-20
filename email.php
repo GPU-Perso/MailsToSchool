@@ -2,6 +2,18 @@
 
 	const Camille = 0;
 	const Arthur = 1;
+    const childNames = array(Camille => "Camille", Arthur => "Arthur");
+
+	const mailCC = "gpungeot@gmail.com,sicardstephanie@gmail.com";
+    const mailBodyParts = array(
+    	"genericStart" => "Bonjour,\nPour information mon enfant ",
+		"go" => "ira ",
+		"noGo" => "n'ira pas ",
+		"genericKinderGarden" => "au centre de loisirs ",
+		"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
+		);
+    const kinderGarden = array(Camille => "CLP ", Arthur => "CLM ");
+    const kinderGardenMails = array(Camille => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>", Arthur => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>");
 
 	class EMail
 	{
@@ -9,20 +21,10 @@
 	    private $goNogo;
 	    private $beginDate = null;
 	    private $endDate = null;
-	    private static $mailBodyParts = array(
-	    	"genericStart" => "Bonjour,\nPour information mon enfant ",
-			"go" => "ira ",
-			"noGo" => "n'ira pas ",
-			"genericKinderGarden" => "au centre de loisirs ",
-			"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
-			);
-	    private $childNames = [Camille => "Camille", Arthur => "Arthur"];
-	    private $kinderGarden = [Camille => "CLP ", Arthur => "CLM "];
-	    private $kinderGardenMails = [Camille => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>", Arthur => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>"];
-
-	    private $mailBody = array();
-	    private $mailChild = array();
-	    private $mailTitle = "";
+        private $mailCC = mailCC;
+	    private $mailBody = [];
+	    private $mailChild = [];
+	    private $mailTitle = [];
 	    private $nbMails = 0;
 
 	    public function __construct($child, $goNogo, $beginDate, $endDate)
@@ -39,27 +41,27 @@
 
 			for($i = 0; $i < count($this->child); $i++)
 			{
-				if(!isset($this->childNames[$this->child[$i]]))
+				if(!isset(childNames[$this->child[$i]]))
 					die("Unknown child");
 
 				$this->nbMails++;
-				$this->mailBody[$i] = self::$mailBodyParts["genericStart"];
+				$this->mailBody[$i] = mailBodyParts["genericStart"];
 
-				$this->mailChild[$i] = $this->childNames[$this->child[$i]];
-				$this->mailTitle[$i] = $this->kinderGarden[$this->child[$i]].$this->mailChild[$i]." Pungeot ".$this->beginDate->format("d/m/Y");
+				$this->mailChild[$i] = childNames[$this->child[$i]];
+				$this->mailTitle[$i] = kinderGarden[$this->child[$i]].$this->mailChild[$i]." Pungeot ".$this->beginDate->format("d/m/Y");
 				if($this->endDate != null)
 					$this->mailTitle[$i] .= " => ".$this->endDate->format("d/m/Y");
-				$this->mailTo[$i] = $this->kinderGardenMails[$this->child[$i]];
+				$this->mailTo[$i] = kinderGardenMails[$this->child[$i]];
 				$this->mailBody[$i] .= $this->mailChild[$i]." Pungeot ";
 
-		    	$this->mailBody[$i] .= $this->goNogo == 0 ? self::$mailBodyParts["go"] : self::$mailBodyParts["noGo"];
+		    	$this->mailBody[$i] .= $this->goNogo == 0 ? mailBodyParts["go"] : mailBodyParts["noGo"];
 
 				if($this->endDate == null)
-    				$this->mailBody[$i] .= self::$mailBodyParts["genericKinderGarden"]."le ".$this->beginDate->format("d/m/Y");
+    				$this->mailBody[$i] .= mailBodyParts["genericKinderGarden"]."le ".$this->beginDate->format("d/m/Y");
 			    else
-    				$this->mailBody[$i] .= self::$mailBodyParts["genericKinderGarden"]."du ".$this->beginDate->format("d/m/Y")." au ".$this->endDate->format("d/m/Y");
+    				$this->mailBody[$i] .= mailBodyParts["genericKinderGarden"]."du ".$this->beginDate->format("d/m/Y")." au ".$this->endDate->format("d/m/Y");
 
-    			$this->mailBody[$i] .= self::$mailBodyParts["genericRegards"];
+    			$this->mailBody[$i] .= mailBodyParts["genericRegards"];
 	    	}
 	    }
 
@@ -68,21 +70,24 @@
             for($i = 0; $i < $this->nbMails; $i++)
 	    	{
 	    		$url = "to=".urlencode($this->mailTo[$i])."&cc=".urlencode($this->mailCC)."&subject=".urlencode($this->mailTitle[$i])."&body=".urlencode($this->mailBody[$i]);
+	    		$htmlMail = nl2br($this->mailBody[$i]);
 	    		echo <<<EOT
-	    		<div class="media col-md-3 col-xs-3">
-                    <figure class="pull-left">
-                        <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png">
-                    </figure>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="list-group-item-heading"> {$this->mailTitle[$i]} </h4>
-                    <p class="list-group-item-text"> <strong>To : </strong>{$this->mailTo[$i]}</p>
-                    <p class="list-group-item-text"> <strong>Cc : </strong>{$this->mailCC}</p>
-                    <br>
-                    <p class="list-group-item-text"> {$this->mailBody[$i]}</p>
-                </div>
-                <div class="text-center">
-                    <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
+	    		<div class="container-fluid">
+		    		<div class="media col-xs-3">
+	                    <figure class="pull-left">
+	                        <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png" title="{$this->mailChild[$i]}">
+	                    </figure>
+	                </div>
+	                <div>
+	                    <h4 class="list-group-item-heading"> {$this->mailTitle[$i]} </h4>
+	                    <p class="list-group-item-text"> <strong>To : </strong>{$this->mailTo[$i]}</p>
+	                    <p class="list-group-item-text"> <strong>Cc : </strong>{$this->mailCC}</p>
+	                    <br>
+	                    <p class="list-group-item-text"> {$htmlMail}</p>
+	                </div>
+	                <div class="text-center">
+	                    <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
+	                </div>
                 </div>
 EOT;
 	    	}
