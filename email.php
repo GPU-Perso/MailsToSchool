@@ -85,7 +85,7 @@
 	                    <br>
 	                    <p class="list-group-item-text"> {$htmlMail}</p>
 	                </div>
-	                <div class="text-center">
+	                <div class="text-center separate">
 	                    <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
 	                </div>
                 </div>

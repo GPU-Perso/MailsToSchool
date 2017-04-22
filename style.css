@@ -62,3 +62,7 @@ div .container
 	margin-top: 20px;
 }
 
+.separate
+{
+	clear: left;
+}
