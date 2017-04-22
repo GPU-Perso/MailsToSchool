@@ -13,7 +13,9 @@
 		"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
 		);
     const kinderGarden = array(Camille => "CLP ", Arthur => "CLM ");
-    const kinderGardenMails = array(Camille => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>", Arthur => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>");
+    const kinderGardenMails = array(
+    	Camille => "Periscolaire Louveciennes <perisco@louveciennes.fr>, centre de loisirs primaire <clp@louveciennes.fr>, Ecole Leclerc - Primaire <0780595Y@ac-versailles.fr>", 
+    	Arthur => "Périscolaire Louveciennes <perisco@louveciennes.fr>, Maîtresse Arthur MS <0782434x@ac-versailles.fr>, Centre De Loisirs Maternelle Louveciennes <clm@louveciennes.fr>");
 
 	class EMail
 	{
