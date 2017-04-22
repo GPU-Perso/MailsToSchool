@@ -42,16 +42,6 @@ header, .glyphicon-home
     display: none;   
 }
 
-.date
-{
-	max-width: 400px;
-}
-
-div .container
-{
-	 max-width: 400px;
-}
-
 .list-group a
 {
 	margin: 20px 0 20px 0;
