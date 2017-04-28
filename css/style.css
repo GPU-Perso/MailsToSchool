@@ -56,3 +56,9 @@ header, .glyphicon-home
 {
 	clear: left;
 }
+
+.calendar
+{
+	margin: auto;
+	max-width:350px;
+}

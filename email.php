@@ -96,6 +96,77 @@ EOT;
 	    }
 	}
 
+	function showCalendarButton($child, $goNogo, $beginDate, $endDate)
+	{
+		$t = [];
+		for($i = 0; $i < count($child); $i++)
+		{
+			if(!isset(childNames[$child[$i]]))
+				die("Unknown child");
+
+				$t[$i] = childNames[$child[$i]];
+		}
+		$title = implode(", ", $t);
+		$title .= $goNogo == 0 ? " au " : " pas au ";
+		$title .= "centre de loisirs";
+		setlocale(LC_TIME, "fr_FR");
+		$mon = strftime("%b",strtotime($beginDate));
+		$day = strftime("%d",strtotime($beginDate));
+		echo <<<EOT
+
+		<div class="container">
+		<div class="calendar">
+		<div class="addeventatc" data-direct="google">
+			<div class="date">
+				<span class="mon">{$mon}</span>
+				<span class="day">{$day}</span>
+				<div class="bdr1"></div>
+				<div class="bdr2"></div>
+			</div>
+EOT;
+		if($endDate != $beginDate)
+		{
+			$mon = strftime("%b",strtotime($endDate));
+			$day = strftime("%d",strtotime($endDate));
+		echo <<<EOT
+			<div class="date">
+				<span class="mon">{$mon}</span>
+				<span class="day">{$day}</span>
+				<div class="bdr1"></div>
+				<div class="bdr2"></div>
+			</div>
+
+EOT;
+		}
+		echo <<<EOT
+			<div class="desc">
+				<p>
+					<strong class="hed">{$title}</strong>
+					<span class="des">16h30 - 19h00</span>
+				</p>
+			</div>
+		    <span class="start">{$beginDate} 16:30</span>
+		    <span class="end">{$endDate} 19:00</span>
+		    <span class="timezone">Europe/Paris</span>
+		    <span class="title">{$title}</span>
+		    <span class="date_format">DD/MM/YYYY</span>
+		    <span class="alarm_reminder">90</span>
+		    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
+		</div></div></div>
+EOT;
+		/*<div title="Ajouter un évènement sur Google Calendar" class="addeventatc" data-direct="google">
+		    Reminder Google Calendar
+		    <span class="start">{$beginDate} 16:30</span>
+		    <span class="end">{$endDate} 19:00</span>
+		    <span class="timezone">Europe/Paris</span>
+		    <span class="title">{$title}</span>
+		    <span class="date_format">DD/MM/YYYY</span>
+		    <span class="alarm_reminder">90</span>
+		    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
+		</div>*/
+	}
+
+
 	if(!isset($_GET["child"]) || !isset($_GET["go-nogo"]) || !isset($_GET["begin-date"]) || $_GET["begin-date"] == "")
 		die("Missing parameters");
 
@@ -107,11 +178,14 @@ EOT;
 <head>
 	<meta charset="utf-8">
 	<title>Notification centre de loisirs</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="/external_libraries/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="/external_libraries/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
 	<link rel="stylesheet" type="text/css" href="/external_libraries/bootstrap-3.3.7-dist/css/bootstrap.css">
+	<link rel="stylesheet" href="css/theme4.css" type="text/css" media="screen" />
+
 </head>
 	<body>
 		<header class="container-fluid">
@@ -123,6 +197,7 @@ EOT;
 
 <?php
 	$mail->printMail();
+	showCalendarButton($_GET["child"], $_GET["go-nogo"], $_GET["begin-date"], (isset($_GET["end-date"]) && $_GET["end-date"] != '') ? $_GET["end-date"] : $_GET["begin-date"]);
 ?>
 		</div>
 	</body>
