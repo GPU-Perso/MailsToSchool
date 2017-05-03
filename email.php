@@ -154,16 +154,6 @@ EOT;
 		    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
 		</div></div></div>
 EOT;
-		/*<div title="Ajouter un évènement sur Google Calendar" class="addeventatc" data-direct="google">
-		    Reminder Google Calendar
-		    <span class="start">{$beginDate} 16:30</span>
-		    <span class="end">{$endDate} 19:00</span>
-		    <span class="timezone">Europe/Paris</span>
-		    <span class="title">{$title}</span>
-		    <span class="date_format">DD/MM/YYYY</span>
-		    <span class="alarm_reminder">90</span>
-		    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
-		</div>*/
 	}
 
 
@@ -178,21 +168,23 @@ EOT;
 <head>
 	<meta charset="utf-8">
 	<title>Notification centre de loisirs</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="/external_libraries/jquery-3.2.0.js"></script>
 	<script type="text/javascript" src="/external_libraries/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 	<script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
 	<link rel="stylesheet" type="text/css" href="/external_libraries/bootstrap-3.3.7-dist/css/bootstrap.css">
 	<link rel="stylesheet" href="css/theme4.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 	<body>
-		<header class="container-fluid">
-
-			<h1><a href="index.html" type="button" class="btn btn-lg"><span class="glyphicon glyphicon-home"></span></a>Envoi des mails</h1>
-		</header>
-
+		<nav class="navbar navbar-custom">
+			<div class="container">
+				<div class="navbar-header">
+					<h1><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Envoi des mails</a></h1>
+				</div>
+			</div>
+		</nav>
 		<div class="list-group">
 
 <?php

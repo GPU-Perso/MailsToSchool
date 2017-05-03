@@ -1,13 +1,28 @@
-header, .glyphicon-home
+h1
 {
-	background-color: #669999;
-	text-align: center;
+	margin-left: 30px;
+}
+
+.navbar-brand
+{
+	font-size: 24px;
+	padding: 0;
 	color: #fff;
+}
+
+.navbar-brand:hover
+{
+	color: #fff;
+}
+
+.navbar-custom 
+{
+    background-color: #337ab7;
 }
 
 .form-group
 {
-	margin: 0 20px;
+	margin: 0 20px 20px 20px;
 }
 .form-group input[type="checkbox"], .form-group input[type="radio"]
 {
