@@ -74,22 +74,20 @@
 	    		$url = "to=".urlencode($this->mailTo[$i])."&cc=".urlencode($this->mailCC)."&subject=".urlencode($this->mailTitle[$i])."&body=".urlencode($this->mailBody[$i]);
 	    		$htmlMail = nl2br($this->mailBody[$i]);
 	    		echo <<<EOT
-	    		<div class="container-fluid">
-		    		<div class="media col-xs-3">
-	                    <figure class="pull-left">
-	                        <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png" title="{$this->mailChild[$i]}">
-	                    </figure>
-	                </div>
-	                <div>
-	                    <h4 class="list-group-item-heading"> {$this->mailTitle[$i]} </h4>
-	                    <p class="list-group-item-text"> <strong>To : </strong>{$this->mailTo[$i]}</p>
-	                    <p class="list-group-item-text"> <strong>Cc : </strong>{$this->mailCC}</p>
-	                    <br>
-	                    <p class="list-group-item-text"> {$htmlMail}</p>
-	                </div>
-	                <div class="text-center separate">
-	                    <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
-	                </div>
+	    		<div class="media col-xs-3">
+                    <figure class="pull-left">
+                        <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png" title="{$this->mailChild[$i]}">
+                    </figure>
+                </div>
+                <div>
+                    <h4 class="list-group-item-heading"> {$this->mailTitle[$i]} </h4>
+                    <p class="list-group-item-text"> <strong>To : </strong>{$this->mailTo[$i]}</p>
+                    <p class="list-group-item-text"> <strong>Cc : </strong>{$this->mailCC}</p>
+                    <br>
+                    <p class="list-group-item-text"> {$htmlMail}</p>
+                </div>
+                <div class="text-center separate">
+                    <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
                 </div>
 EOT;
 	    	}
@@ -114,45 +112,45 @@ EOT;
 		$day = strftime("%d",strtotime($beginDate));
 		echo <<<EOT
 
-		<div class="container">
 		<div class="calendar">
-		<div class="addeventatc" data-direct="google">
-			<div class="date">
-				<span class="mon">{$mon}</span>
-				<span class="day">{$day}</span>
-				<div class="bdr1"></div>
-				<div class="bdr2"></div>
-			</div>
+			<div class="addeventatc" data-direct="google">
+				<div class="date">
+					<span class="mon">{$mon}</span>
+					<span class="day">{$day}</span>
+					<div class="bdr1"></div>
+					<div class="bdr2"></div>
+				</div>
 EOT;
 		if($endDate != $beginDate)
 		{
 			$mon = strftime("%b",strtotime($endDate));
 			$day = strftime("%d",strtotime($endDate));
 		echo <<<EOT
-			<div class="date">
-				<span class="mon">{$mon}</span>
-				<span class="day">{$day}</span>
-				<div class="bdr1"></div>
-				<div class="bdr2"></div>
-			</div>
+				<div class="date">
+					<span class="mon">{$mon}</span>
+					<span class="day">{$day}</span>
+					<div class="bdr1"></div>
+					<div class="bdr2"></div>
+				</div>
 
 EOT;
 		}
 		echo <<<EOT
-			<div class="desc">
-				<p>
-					<strong class="hed">{$title}</strong>
-					<span class="des">16h30 - 19h00</span>
-				</p>
+				<div class="desc">
+					<p>
+						<strong class="hed">{$title}</strong>
+						<span class="des">16h30 - 19h00</span>
+					</p>
+				</div>
+			    <span class="start">{$beginDate} 16:30</span>
+			    <span class="end">{$endDate} 19:00</span>
+			    <span class="timezone">Europe/Paris</span>
+			    <span class="title">{$title}</span>
+			    <span class="date_format">DD/MM/YYYY</span>
+			    <span class="alarm_reminder">90</span>
+			    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
 			</div>
-		    <span class="start">{$beginDate} 16:30</span>
-		    <span class="end">{$endDate} 19:00</span>
-		    <span class="timezone">Europe/Paris</span>
-		    <span class="title">{$title}</span>
-		    <span class="date_format">DD/MM/YYYY</span>
-		    <span class="alarm_reminder">90</span>
-		    <span class="client">aRlhCtjewzJtcCdYWmSg28036</span>
-		</div></div></div>
+		</div>
 EOT;
 	}
 
@@ -179,18 +177,20 @@ EOT;
 </head>
 	<body>
 		<nav class="navbar navbar-custom">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="navbar-header">
 					<h1><a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-home"></span> Envoi des mails</a></h1>
 				</div>
 			</div>
 		</nav>
-		<div class="list-group">
+		<div class="container-fluid">
+			<div class="list-group">
 
 <?php
 	$mail->printMail();
 	showCalendarButton($_GET["child"], $_GET["go-nogo"], $_GET["begin-date"], (isset($_GET["end-date"]) && $_GET["end-date"] != '') ? $_GET["end-date"] : $_GET["begin-date"]);
 ?>
+			</div>
 		</div>
 	</body>
 </html>
