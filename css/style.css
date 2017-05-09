@@ -1,3 +1,10 @@
+body
+{
+	min-width: 400px;
+	max-width: 1200px;
+	margin: auto;
+}
+
 h1
 {
 	margin-left: 30px;
@@ -18,6 +25,7 @@ h1
 .navbar-custom 
 {
     background-color: #337ab7;
+    margin-bottom: 0;
 }
 
 .form-group
@@ -59,7 +67,7 @@ h1
 
 .list-group a
 {
-	margin: 20px 0 20px 0;
+	margin: 20px 0 0;
 }
 
 .list-group 
@@ -72,8 +80,16 @@ h1
 	clear: left;
 }
 
-.calendar
+.media img
 {
-	margin: auto;
-	max-width:387px;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.separator
+{
+	width: 200px;
+	height: 3px;
+	margin: 30px auto 30px auto;
+	background-color: #968e8e;
 }

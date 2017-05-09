@@ -74,12 +74,10 @@
 	    		$url = "to=".urlencode($this->mailTo[$i])."&cc=".urlencode($this->mailCC)."&subject=".urlencode($this->mailTitle[$i])."&body=".urlencode($this->mailBody[$i]);
 	    		$htmlMail = nl2br($this->mailBody[$i]);
 	    		echo <<<EOT
-	    		<div class="media col-xs-3">
-                    <figure class="pull-left">
-                        <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png" title="{$this->mailChild[$i]}">
-                    </figure>
+	    		<div class="media col-sm-3 text-center">
+                    <img class="media-object img-circle img-responsive"  src="images/{$this->mailChild[$i]}.png" title="{$this->mailChild[$i]}">
                 </div>
-                <div>
+                <div class="col-sm-9">
                     <h4 class="list-group-item-heading"> {$this->mailTitle[$i]} </h4>
                     <p class="list-group-item-text"> <strong>To : </strong>{$this->mailTo[$i]}</p>
                     <p class="list-group-item-text"> <strong>Cc : </strong>{$this->mailCC}</p>
@@ -89,6 +87,7 @@
                 <div class="text-center separate">
                     <a  type="button" href="mailto:?{$url}" target="_blank" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-envelope"></span> Envoyer </a>
                 </div>
+                <div class="separator"></div>
 EOT;
 	    	}
 	    }
@@ -112,7 +111,7 @@ EOT;
 		$day = strftime("%d",strtotime($beginDate));
 		echo <<<EOT
 
-		<div class="calendar">
+		<div class="text-center">
 			<div class="addeventatc" data-direct="google">
 				<div class="date">
 					<span class="mon">{$mon}</span>
