@@ -10,6 +10,7 @@
 		"go" => "ira ",
 		"noGo" => "n'ira pas ",
 		"genericKinderGarden" => "au centre de loisirs ",
+		"cafeteria" => "et n'ira pas à la cantine ",
 		"genericRegards" => ".\n\nBonne journée.\nCordialement\nGuillaume Pungeot",
 		);
     const kinderGarden = array(Camille => "CLP ", Arthur => "CLM ");
@@ -19,8 +20,9 @@
 
 	class EMail
 	{
-	    private $child;
+	    private $child;	    
 	    private $goNogo;
+	    private $cafeteria;
 	    private $beginDate = null;
 	    private $endDate = null;
         private $mailCC = mailCC;
@@ -29,10 +31,11 @@
 	    private $mailTitle = [];
 	    private $nbMails = 0;
 
-	    public function __construct($child, $goNogo, $beginDate, $endDate)
+	    public function __construct($child, $goNogo, $cafeteria, $beginDate, $endDate)
 	    {
 	       	$this->child = $child;
 	    	$this->goNogo = $goNogo;
+	    	$this->cafeteria = $cafeteria;
 	    	$this->beginDate = DateTime::createFromFormat("d-m-Y", $beginDate);
 	    	if($endDate != null && $endDate != "")
 	    	{
@@ -55,13 +58,14 @@
 					$this->mailTitle[$i] .= " => ".$this->endDate->format("d/m/Y");
 				$this->mailTo[$i] = kinderGardenMails[$this->child[$i]];
 				$this->mailBody[$i] .= $this->mailChild[$i]." Pungeot ";
-
 		    	$this->mailBody[$i] .= $this->goNogo == 0 ? mailBodyParts["go"] : mailBodyParts["noGo"];
-
+		    	$this->mailBody[$i] .= mailBodyParts["genericKinderGarden"];
+		    	if($this->cafeteria == 0)
+		    		$this->mailBody[$i] .= mailBodyParts["cafeteria"];
 				if($this->endDate == null)
-    				$this->mailBody[$i] .= mailBodyParts["genericKinderGarden"]."le ".$this->beginDate->format("d/m/Y");
+    				$this->mailBody[$i] .= "le ".$this->beginDate->format("d/m/Y");
 			    else
-    				$this->mailBody[$i] .= mailBodyParts["genericKinderGarden"]."du ".$this->beginDate->format("d/m/Y")." au ".$this->endDate->format("d/m/Y");
+    				$this->mailBody[$i] .= "du ".$this->beginDate->format("d/m/Y")." au ".$this->endDate->format("d/m/Y");
 
     			$this->mailBody[$i] .= mailBodyParts["genericRegards"];
 	    	}
@@ -157,7 +161,7 @@ EOT;
 	if(!isset($_GET["child"]) || !isset($_GET["go-nogo"]) || !isset($_GET["begin-date"]) || $_GET["begin-date"] == "")
 		die("Missing parameters");
 
-	$mail = new Email($_GET["child"], $_GET["go-nogo"], $_GET["begin-date"], isset($_GET["end-date"]) ? $_GET["end-date"] : null);
+	$mail = new Email($_GET["child"], $_GET["go-nogo"], isset($_GET["cafeteria"]) ? $_GET["cafeteria"] : 1, $_GET["begin-date"], isset($_GET["end-date"]) ? $_GET["end-date"] : null);
 ?>
 
 <!DOCTYPE html>
